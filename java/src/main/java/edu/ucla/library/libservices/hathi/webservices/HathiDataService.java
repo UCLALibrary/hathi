@@ -9,6 +9,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.Response;
 
 @Path("/data/")
 public class HathiDataService
@@ -24,7 +25,7 @@ public class HathiDataService
   @GET
   @Produces("application/json")
   @Path("forids/{bibIDs}")
-  public HathiDataGenerator getData(@PathParam( "bibIDs" )
+  public Response getData(@PathParam( "bibIDs" )
     String bibIDs)
   {
     HathiDataGenerator docMaker;
@@ -33,8 +34,23 @@ public class HathiDataService
 
     docMaker.setDbName(config.getServletContext().getInitParameter("datasource.vger"));
     docMaker.setBibIDs(bibIDs);
-    docMaker.prepItems();
-
-    return docMaker;
+    
+    try
+    {
+      docMaker.prepItems();
+      
+      if ( docMaker.getItems().size() == 0 )
+      {
+        return Response.status(Response.Status.NOT_FOUND).build();
+      }
+      else
+      {
+        return Response.ok(docMaker).build();
+      }
+    }
+    catch ( Exception e )
+    {
+      return Response.serverError().build();
+    }
   }
 }

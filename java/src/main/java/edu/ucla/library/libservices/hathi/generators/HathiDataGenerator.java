@@ -1,12 +1,14 @@
 package edu.ucla.library.libservices.hathi.generators;
 
 import edu.ucla.library.libservices.hathi.beans.HathiData;
-
 import edu.ucla.library.libservices.hathi.db.mapper.HathiDataMapper;
 import edu.ucla.library.libservices.hathi.db.source.DataSourceFactory;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import javax.sql.DataSource;
 
@@ -57,6 +59,11 @@ public class HathiDataGenerator
     return bibIDs;
   }
 
+  public List<HathiData> getItems()
+  {
+    return items;
+  }
+
   private void makeConnection()
   {
     ds = DataSourceFactory.createDataSource(getDbName());
@@ -82,7 +89,7 @@ public class HathiDataGenerator
   }
 
   @SuppressWarnings("unchecked")
-  public List<HathiData> getItems()
+  public List<HathiData> getTestItems()
   {
     MapSqlParameterSource parameters;
 
@@ -98,12 +105,9 @@ public class HathiDataGenerator
 
   private List<Integer> convertIDs()
   {
-    List<Integer> converted;
-
-    converted = new ArrayList<Integer>();
-    for (String id: getBibIDs().split(","))
-      converted.add(Integer.parseInt(id));
-
-    return converted;
+    return Arrays.stream(getBibIDs().split(","))
+                 .flatMapToInt(n -> IntStream.of(Integer.parseInt(n)))
+                 .boxed()
+                 .collect(Collectors.toList());
   }
 }

@@ -18,11 +18,12 @@ public class Tester
     List<HathiData> items;
     
     tester = new HathiDataGenerator();
-    tester.setBibIDs("1001066");
+    tester.setBibIDs("100107");
     tester.setDbName("dbName");
-    items = tester.getItems();
+    items = tester.getTestItems();
     
-    for ( HathiData theItem : items )
-      System.out.println(theItem.toString());
+    items.stream().forEach(System.out::println);
+    //for ( HathiData theItem : items )
+      //System.out.println(theItem.toString());
   }
 }
