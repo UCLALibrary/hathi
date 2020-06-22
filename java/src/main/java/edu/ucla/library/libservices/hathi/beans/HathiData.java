@@ -19,6 +19,8 @@ public class HathiData
   private String accessLevel;
   @XmlElement(name = "rightsCode")
   private String rightsCode;
+  @XmlElement(name = "hathiBibKey")
+  private String hathiBibKey;
 
   public HathiData()
   {
@@ -75,10 +77,20 @@ public class HathiData
     return rightsCode;
   }
 
+  public void setHathiBibKey(String hathiBibKey)
+  {
+    this.hathiBibKey = hathiBibKey;
+  }
+
+  public String getHathiBibKey()
+  {
+    return hathiBibKey;
+  }
+
   @Override
   public String toString()
   {
     return getBibID() + " : " + getOclcNumber() + " : " + getItemType() + " : " + getAccessLevel() + " : " +
-           getRightsCode();
+           getRightsCode() + " : " + getHathiBibKey();
   }
 }
