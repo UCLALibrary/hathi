@@ -13,7 +13,7 @@ grant select on vger_report.hathi_overlap to ucla_preaddb;
 
 -- Temporary tables for imports/updates
 create table vger_report.tmp_hathi_import (
-  oclc_number varchar2(15) not null
+  oclc_number varchar2(15)
 , hathi_bib_key varchar2(10) not null
 )
 ;
