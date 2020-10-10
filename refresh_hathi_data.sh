@@ -1,6 +1,9 @@
 #!/bin/bash
 # bash for arrays
 
+# Get latest HATHI_FILE from https://www.hathitrust.org/hathifiles
+# Get latest OVERLAP_FILE from https://ucla.app.box.com/folder/114339001662 (login required)
+
 # Command-line file handling
 if [ -f "$1" -a -f "$2" ]; then
   HATHI_FILE="$1"
