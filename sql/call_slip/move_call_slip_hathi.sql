@@ -24,4 +24,14 @@ where exists (
 )
 ;
 
+-- Also remove the "Call Slip Request" item status for these items
+delete from ucladb.item_status
+where item_status = 23
+and item_id in (
+  select distinct item_id
+  from vger_support.call_slip_hathi
+  where date_responded is null
+)
+;
+
 commit;
